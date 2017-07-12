@@ -19,7 +19,7 @@ namespace PythonDude
 
         private void RunPython(string args)
         {
-            string s = DOSPrompt.CMDAutomate(args, "C:\\python3.5\\python.exe");
+            string s = DOSPrompt.CMDAutomate(args, Properties.Settings.Default.PythonPath);
             rtbConsole.Text = s;
         }
 
@@ -35,6 +35,7 @@ namespace PythonDude
 
         private void SaveFile()
         {
+            if(!string.IsNullOrEmpty(rtbCode.Text))
             System.IO.File.WriteAllText(lblFileName.Text, rtbCode.Text);
             // rtbCode.SaveFile(lblFileName.Text, RichTextBoxStreamType.PlainText);
 
@@ -86,6 +87,7 @@ namespace PythonDude
             HighlightingManager.Manager.AddSyntaxModeFileProvider(fsmp);
             rtbCode.SetHighlighting("Python");
 
+            openFileDialog1.InitialDirectory = Application.StartupPath + "\\python_samples";
 
 
         }
@@ -102,6 +104,12 @@ namespace PythonDude
             AddCode("print()");
         }
 
-        #endregion 
+        #endregion
+
+        private void tsbSettings_Click(object sender, EventArgs e)
+        {
+            frmSettings x = new frmSettings();
+            x.ShowDialog();
+        }
     }
 }
